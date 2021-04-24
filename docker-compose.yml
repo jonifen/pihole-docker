@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+      - '67:67/tcp'
+      - '8989:80/tcp'
+      - '8988:443/tcp'
+    volumes:
+      - '/data/pihole/etc/:/etc/pihole/'
+      - '/data/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+      - '/data/pihole/var-log/pihole.log:/var/log/pihole.log'
+    cap_add:
+      - NET_ADMIN
+    environment:
+      ServerIP: 10.10.10.10
+      PROXY_LOCATION: pihole
+      VIRTUAL_HOST: pihole.cain.org.uk
+      VIRTUAL_PORT: 80
+    restart: always
